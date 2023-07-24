@@ -6,7 +6,10 @@
 
 package moudle
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type SysUser struct {
 	Id           int64 `gorm:"primaryKey"`
@@ -24,4 +27,12 @@ type SysUser struct {
 
 func (SysUser) TableName() string {
 	return "sys_user"
+}
+
+func (s *SysUser) MarshalBinary() ([]byte, error) {
+	return json.Marshal(s)
+}
+
+func (s *SysUser) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, s)
 }
