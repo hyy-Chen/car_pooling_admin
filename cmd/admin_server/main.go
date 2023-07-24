@@ -10,8 +10,8 @@ func main() {
 	r := gin.Default()
 
 	// 配置路由
+	routers.DefaultRoutersInit(r)
 	routers.AdminRoutersInit(r)
-
 	// 启动Gin服务
 	r.Run(":8080")
 }
