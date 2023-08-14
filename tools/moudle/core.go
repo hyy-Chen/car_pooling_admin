@@ -22,7 +22,7 @@ var (
 
 func init() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
-	dsn := "root:F71BBE7314684A96@tcp(8.134.152.127:3306)/pooling_car?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := ""
 	// 获取连接
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -31,13 +31,18 @@ func init() {
 
 	// 获取redis连接
 	Cli = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379", // Redis服务器地址和端口
+		Addr:     "redis_car:6379", // Redis服务器地址和端口
 		Password: "",               // 服务器密码（如果没有设置密码，保持为空）
 		DB:       0,                // 使用默认数据库
 	})
 	// 测试连接是否成功
 	_, err = Cli.Ping(Ctx).Result()
 	if err != nil {
+		//Cli = redis.NewClient(&redis.Options{
+		//	Addr:     "localhost:6379", // Redis服务器地址和端口
+		//	Password: "",               // 服务器密码（如果没有设置密码，保持为空）
+		//	DB:       0,                // 使用默认数据库
+		//})
 		panic(err)
 	}
 }
